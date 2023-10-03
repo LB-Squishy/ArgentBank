@@ -1,7 +1,7 @@
 ---
 name: '#4 Privacy Requirement'
 about: Issue for the privacy requirement
-title: User can only see their own profile
+title: 4.Privacy Requirement - User can only see their own profile
 labels: ''
 assignees: ''
 ---
