@@ -8,8 +8,8 @@ This codebase contains the code needed to run the backend for Argent Bank.
 
 Argent Bank uses the following tech stack:
 
-- [Node.js v12](https://nodejs.org/en/)
-- [MongoDB Community Server](https://www.mongodb.com/try/download/community)
+-   [Node.js v12](https://nodejs.org/en/)
+-   [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 
 Please make sure you have the right versions and download both packages. You can verify this by using the following commands in your terminal:
 
@@ -39,7 +39,7 @@ npm run dev:server
 npm run populate-db
 ```
 
-Your server should now be running at http://locahost:3001 and you will now have two users in your MongoDB database!
+Your server should now be running at http://localhost:3001 and you will now have two users in your MongoDB database!
 
 ## Populated Database Data
 
@@ -47,17 +47,17 @@ Once you run the `populate-db` script, you should have two users in your databas
 
 ### Tony Stark
 
-- First Name: `Tony`
-- Last Name: `Stark`
-- Email: `tony@stark.com`
-- Password: `password123`
+-   First Name: `Tony`
+-   Last Name: `Stark`
+-   Email: `tony@stark.com`
+-   Password: `password123`
 
 ### Steve Rogers
 
-- First Name: `Steve`,
-- Last Name: `Rogers`,
-- Email: `steve@rogers.com`,
-- Password: `password456`
+-   First Name: `Steve`,
+-   Last Name: `Rogers`,
+-   Email: `steve@rogers.com`,
+-   Password: `password456`
 
 ## API Documentation
 
