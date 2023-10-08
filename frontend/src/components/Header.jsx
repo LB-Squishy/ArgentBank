@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import argentBankLogo from "../../assets/argentBankLogo.png";
+import argentBankLogo from "../assets/argentBankLogo.png";
 
 /**
- * Ce composant crée le header
+ * Créer le header
  */
 
 export default function Header() {

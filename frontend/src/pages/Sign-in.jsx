@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 /**
- * Ce composant créer le contenu de la page Sign-in
+ * Créer le contenu de la page Sign-in
  */
 
 export default function SignIn() {

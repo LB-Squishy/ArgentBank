@@ -1,5 +1,5 @@
 /**
- * Ce composant crée le footer
+ * Créer le footer
  */
 
 export default function Footer() {
