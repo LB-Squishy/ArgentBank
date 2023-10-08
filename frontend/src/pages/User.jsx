@@ -12,6 +12,8 @@ export default function User() {
         savingsBalance: "$10,928.42",
         creditCardBalance: "$184.30",
     };
+    // const token = localStorage.getItem("token");
+    // console.log(token);
     return (
         <main className="main bg-dark">
             <div className="header">
