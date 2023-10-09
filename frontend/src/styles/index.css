@@ -277,6 +277,16 @@ body,
     color: #fff;
 }
 
+.alert {
+    display: flex;
+    padding: 8px;
+    font-size: 0.8rem;
+    margin-top: 1rem;
+    font-weight: bold;
+    background-color: #cc7979;
+    color: #fff;
+}
+
 @media (min-width: 720px) {
     .account {
         flex-direction: row;

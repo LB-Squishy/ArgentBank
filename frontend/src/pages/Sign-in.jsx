@@ -1,62 +1,51 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../store/UserSlice";
 
 /**
  * Créer le contenu de la page Sign-in
  */
 
 export default function SignIn() {
-    const [username, setUserName] = useState("");
+    // states
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
 
-    const handleSignIn = async (event) => {
-        event.preventDefault();
-        const userData = {
-            email: username,
-            password: password,
+    //redux states
+    const { error } = useSelector((state) => state.user);
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleSignIn = (e) => {
+        e.preventDefault();
+        let userLoginData = {
+            email,
+            password,
         };
-        try {
-            const response = await fetch(
-                "http://localhost:3001/api/v1/user/login",
-                {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(userData),
-                }
-            );
-            if (response.ok) {
-                const result = await response.json();
-                const token = result.body.token;
-                localStorage.setItem("token", token);
-                // console.log(token);
+        dispatch(loginUser(userLoginData)).then((result) => {
+            if (result.payload) {
+                setEmail("");
+                setPassword("");
                 navigate("/user");
-            } else {
-                console.error("Erreur lors de la connexion");
-                alert(
-                    "Echec de connexion. Saisissez un nom d'utilisateur et un mot de passe valide"
-                );
             }
-        } catch (error) {
-            console.error("Erreur lors de la connexion", error);
-            alert("Echec de connexion.");
-        }
+        });
     };
+
     return (
         <main className="main bg-dark">
             <section className="sign-in-content">
                 <i className="fa fa-user-circle sign-in-icon"></i>
                 <h1>Sign In</h1>
-                <form>
+                <form onSubmit={handleSignIn}>
                     <div className="input-wrapper">
-                        <label htmlFor="username">Username</label>
+                        <label htmlFor="email">Email</label>
                         <input
                             type="text"
-                            id="username"
-                            value={username}
-                            onChange={(e) => setUserName(e.target.value)}
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                         />
                     </div>
                     <div className="input-wrapper">
@@ -72,9 +61,14 @@ export default function SignIn() {
                         <input type="checkbox" id="remember-me" />
                         <label htmlFor="remember-me">Remember me</label>
                     </div>
-                    <button className="sign-in-button" onClick={handleSignIn}>
+                    <button className="sign-in-button" type="submit">
                         Sign In
                     </button>
+                    {error && (
+                        <div className="alert" role="alert">
+                            {error}
+                        </div>
+                    )}
                 </form>
             </section>
         </main>

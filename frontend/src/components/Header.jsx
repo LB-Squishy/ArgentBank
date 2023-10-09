@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import argentBankLogo from "../assets/argentBankLogo.png";
+import { useSelector } from "react-redux";
 
 /**
  * Créer le header
  */
 
 export default function Header() {
+    const { log } = useSelector((state) => state.user);
     return (
         <header>
             <nav className="main-nav">
@@ -17,9 +19,12 @@ export default function Header() {
                     />
                     <h1 className="sr-only">Argent Bank</h1>
                 </Link>
-                <Link className="main-nav-item" to="./sign-in">
+                <Link
+                    className="main-nav-item"
+                    to={log ? "./homepage" : "./sign-in"}
+                >
                     <i className="fa fa-user-circle"></i>
-                    <span> Sign In</span>
+                    {log ? " Sign Out" : " Sign In"}
                 </Link>
             </nav>
         </header>
