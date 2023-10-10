@@ -9,6 +9,7 @@ import iconeSecurity from "../assets/icon-security.png";
  */
 
 export default function Homepage() {
+    // recuperation des images
     const imageMap = {
         "icon-chat.png": iconeChat,
         "icon-money.png": iconeMoney,

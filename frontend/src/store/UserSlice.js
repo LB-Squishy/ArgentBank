@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+// fetch au login pour recuperation du token
 export const loginUser = createAsyncThunk(
     "user/loginUser",
     async (userLoginData) => {
@@ -9,36 +10,35 @@ export const loginUser = createAsyncThunk(
             userLoginData
         );
         const response = await request.data;
-        localStorage.setItem("token", JSON.stringify(response.body.token));
-        console.log(response);
-        const test = localStorage.getItem("token");
-        console.log(test);
         return response;
     }
 );
 
+// pour suppression du token dans redux states
+export const logoutUser = createAsyncThunk("user/logoutUser", () => {});
+
+// création de la Slice
 const userSlice = createSlice({
     name: "user",
     initialState: {
-        email: null,
-        password: null,
         firstName: null,
         lastName: null,
         userName: null,
         token: null,
-        log: false,
+        isLog: false,
         error: null,
     },
     extraReducers: (builder) => {
         builder
+            // login réussi
             .addCase(loginUser.fulfilled, (state, action) => {
-                state.log = true;
+                state.isLog = true;
                 state.token = action.payload.body.token;
-                // console.log(action.payload);
                 state.error = null;
             })
+            // login échoué
             .addCase(loginUser.rejected, (state, action) => {
-                state.log = false;
+                state.isLog = false;
                 state.token = null;
                 if (
                     action.error.message ===
@@ -48,6 +48,11 @@ const userSlice = createSlice({
                 } else {
                     state.error = action.error.message;
                 }
+            })
+            // suppression du token au logOut
+            .addCase(logoutUser.fulfilled, (state) => {
+                state.isLog = false;
+                state.token = null;
             });
     },
 });

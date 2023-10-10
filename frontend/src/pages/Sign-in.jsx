@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../store/UserSlice";
@@ -11,13 +11,32 @@ export default function SignIn() {
     // states
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [rememberMe, setRememberMe] = useState(false);
 
-    //redux states
+    // redux states
     const { error } = useSelector((state) => state.user);
 
+    // recupération des hooks
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
+    // recupération des infos de connexion si rememberMe coché
+    useEffect(() => {
+        const localEmail = localStorage.getItem("email");
+        const localPassword = localStorage.getItem("password");
+        if (localEmail && localPassword) {
+            setEmail(localEmail);
+            setPassword(localPassword);
+            setRememberMe(true);
+        }
+    }, []);
+
+    // changement d'état de rememberMe
+    const handleChangeRememberMe = () => {
+        setRememberMe(!rememberMe);
+    };
+
+    // gestion du bouton signIn
     const handleSignIn = (e) => {
         e.preventDefault();
         let userLoginData = {
@@ -26,9 +45,20 @@ export default function SignIn() {
         };
         dispatch(loginUser(userLoginData)).then((result) => {
             if (result.payload) {
+                if (rememberMe === true) {
+                    localStorage.setItem("email", email);
+                    localStorage.setItem("password", password);
+                    localStorage.setItem("rememberMe", true);
+                } else {
+                    localStorage.removeItem("email");
+                    localStorage.removeItem("password");
+                    localStorage.removeItem("rememberMe");
+                }
+                sessionStorage.setItem("isLog", "true");
+                navigate("/user");
+            } else {
                 setEmail("");
                 setPassword("");
-                navigate("/user");
             }
         });
     };
@@ -46,6 +76,7 @@ export default function SignIn() {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="input-wrapper">
@@ -55,10 +86,16 @@ export default function SignIn() {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            required
                         />
                     </div>
                     <div className="input-remember">
-                        <input type="checkbox" id="remember-me" />
+                        <input
+                            type="checkbox"
+                            id="remember-me"
+                            checked={rememberMe}
+                            onChange={handleChangeRememberMe}
+                        />
                         <label htmlFor="remember-me">Remember me</label>
                     </div>
                     <button className="sign-in-button" type="submit">
