@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../store/UserSlice";
+import { loginUser } from "../thunk/userThunks";
 
 /**
  * Créer le contenu de la page Sign-in
@@ -23,10 +23,8 @@ export default function SignIn() {
     // recupération des infos de connexion si rememberMe coché
     useEffect(() => {
         const localEmail = localStorage.getItem("email");
-        const localPassword = localStorage.getItem("password");
-        if (localEmail && localPassword) {
+        if (localEmail) {
             setEmail(localEmail);
-            setPassword(localPassword);
             setRememberMe(true);
         }
     }, []);
@@ -47,11 +45,9 @@ export default function SignIn() {
             if (result.payload) {
                 if (rememberMe === true) {
                     localStorage.setItem("email", email);
-                    localStorage.setItem("password", password);
                     localStorage.setItem("rememberMe", true);
                 } else {
                     localStorage.removeItem("email");
-                    localStorage.removeItem("password");
                     localStorage.removeItem("rememberMe");
                 }
                 navigate("/user");

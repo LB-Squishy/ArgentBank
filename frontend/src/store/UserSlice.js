@@ -1,21 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-
-// fetch au login pour recuperation du token
-export const loginUser = createAsyncThunk(
-    "user/loginUser",
-    async (userLoginData) => {
-        const request = await axios.post(
-            "http://localhost:3001/api/v1/user/login",
-            userLoginData
-        );
-        const response = await request.data;
-        return response;
-    }
-);
-
-// pour suppression du token dans redux states
-export const logoutUser = createAsyncThunk("user/logoutUser", () => {});
+import { createSlice } from "@reduxjs/toolkit";
+import { loginUser, logoutUser } from "../thunks/userThunks";
 
 // création de la Slice
 const userSlice = createSlice({
@@ -49,7 +33,7 @@ const userSlice = createSlice({
                     state.error = action.error.message;
                 }
             })
-            // suppression du token au logOut
+            // reset du state au logOut
             .addCase(logoutUser.fulfilled, (state) => {
                 state.firstName = null;
                 state.lastName = null;
