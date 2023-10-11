@@ -51,8 +51,12 @@ const userSlice = createSlice({
             })
             // suppression du token au logOut
             .addCase(logoutUser.fulfilled, (state) => {
-                state.isLog = false;
+                state.firstName = null;
+                state.lastName = null;
+                state.userName = null;
                 state.token = null;
+                state.isLog = false;
+                state.error = null;
             });
     },
 });

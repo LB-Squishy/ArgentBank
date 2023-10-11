@@ -54,7 +54,6 @@ export default function SignIn() {
                     localStorage.removeItem("password");
                     localStorage.removeItem("rememberMe");
                 }
-                sessionStorage.setItem("isLog", "true");
                 navigate("/user");
             } else {
                 setEmail("");
