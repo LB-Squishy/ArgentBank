@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import argentBankLogo from "../assets/argentBankLogo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../thunk/userThunks";
+import { logoutUser } from "../thunks/userThunks";
 
 /**
  * Créer le header

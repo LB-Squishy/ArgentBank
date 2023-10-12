@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addProfilUser } from "../thunks/userThunks";
 import AccountCard from "../components/AccountCard";
 import accountData from "../data/accountCardData.json";
 
@@ -6,6 +9,10 @@ import accountData from "../data/accountCardData.json";
  */
 
 export default function User() {
+    // redux states
+    const token = useSelector((state) => state.user.token);
+    const userName = useSelector((state) => state.user.userName);
+
     // Données de montant provisoires sans gestion de données par utilisateur
     const userBalances = {
         checkingBalance: "$2,082.79",
@@ -13,13 +20,21 @@ export default function User() {
         creditCardBalance: "$184.30",
     };
 
+    // recupération des hooks
+    const dispatch = useDispatch();
+
+    // recupération des infos du profil qui s'est connecté
+    useEffect(() => {
+        dispatch(addProfilUser(token));
+    });
+
     return (
         <main className="main bg-dark">
             <div className="header">
                 <h1>
                     Welcome back
                     <br />
-                    Tony Jarvis!
+                    {userName}
                 </h1>
                 <button className="edit-button">Edit Name</button>
             </div>

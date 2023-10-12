@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, logoutUser } from "../thunks/userThunks";
+import { loginUser, logoutUser, addProfilUser } from "../thunks/userThunks";
 
 // création de la Slice
 const userSlice = createSlice({
@@ -41,6 +41,11 @@ const userSlice = createSlice({
                 state.token = null;
                 state.isLog = false;
                 state.error = null;
+            })
+            .addCase(addProfilUser.fulfilled, (state, action) => {
+                state.firstName = action.payload.body.firstName;
+                state.lastName = action.payload.body.lastName;
+                state.userName = action.payload.body.userName;
             });
     },
 });

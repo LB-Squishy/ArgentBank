@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../thunk/userThunks";
+import { loginUser } from "../thunks/userThunks";
 
 /**
  * Créer le contenu de la page Sign-in
