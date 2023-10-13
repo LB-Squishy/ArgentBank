@@ -38,3 +38,23 @@ export const addProfilUser = createAsyncThunk(
         return response.data;
     }
 );
+
+/**  fetch pour changer les données utilisateur
+/* @param {string} newUsername
+/* @returns {Promise}
+*/
+export const changeProfilUser = createAsyncThunk(
+    "user/changeProfilUser",
+    async ({ token, newUserName }) => {
+        const response = await axios.put(
+            "http://localhost:3001/api/v1/user/profile",
+            { userName: `${newUserName}` },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+        return response.data;
+    }
+);

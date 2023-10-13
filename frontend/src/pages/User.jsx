@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addProfilUser } from "../thunks/userThunks";
+import { addProfilUser, changeProfilUser } from "../thunks/userThunks";
 import AccountCard from "../components/AccountCard";
 import accountData from "../data/accountCardData.json";
 
@@ -12,6 +12,12 @@ export default function User() {
     // redux states
     const token = useSelector((state) => state.user.token);
     const userName = useSelector((state) => state.user.userName);
+    const firstName = useSelector((state) => state.user.firstName);
+    const lastName = useSelector((state) => state.user.lastName);
+
+    //state
+    const [editNameActive, setEditNameActive] = useState(false);
+    const [newUserName, setNewUserName] = useState(userName);
 
     // Données de montant provisoires sans gestion de données par utilisateur
     const userBalances = {
@@ -28,6 +34,23 @@ export default function User() {
         dispatch(addProfilUser(token));
     });
 
+    // affichage du formulaire
+    const handleClickEditName = () => {
+        setEditNameActive(true);
+    };
+    const handleClickCloseEditName = () => {
+        setEditNameActive(false);
+    };
+
+    // envoi les données du formulaire pour changer userName et appel les nouvelles infos
+    const handleClickSaveNewName = (e) => {
+        e.preventDefault();
+        dispatch(changeProfilUser({ token, newUserName }));
+        dispatch(addProfilUser(token));
+        setEditNameActive(false);
+    };
+
+    // <form onSubmit={handleClickSaveNewName}></form>
     return (
         <main className="main bg-dark">
             <div className="header">
@@ -36,8 +59,52 @@ export default function User() {
                     <br />
                     {userName}
                 </h1>
-                <button className="edit-button">Edit Name</button>
+                <button className="edit-button" onClick={handleClickEditName}>
+                    Edit Name
+                </button>
+                {editNameActive ? (
+                    <form onSubmit={handleClickSaveNewName}>
+                        <div className="input-wrapper">
+                            <label htmlFor="userName">User name</label>
+                            <input
+                                type="text"
+                                id="userName"
+                                value={newUserName}
+                                onChange={(e) => setNewUserName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div className="input-wrapper">
+                            <label htmlFor="firstName">First name</label>
+                            <input
+                                type="text"
+                                id="firstName"
+                                placeholder={firstName}
+                                readOnly
+                            />
+                        </div>
+                        <div className="input-wrapper">
+                            <label htmlFor="lastName">Last name</label>
+                            <input
+                                type="text"
+                                id="lastName"
+                                placeholder={lastName}
+                                readOnly
+                            />
+                        </div>
+                        <button className="sign-in-button" type="submit">
+                            Save
+                        </button>
+                        <button
+                            className="sign-in-button"
+                            onClick={handleClickCloseEditName}
+                        >
+                            Cancel
+                        </button>
+                    </form>
+                ) : null}
             </div>
+
             <h2 className="sr-only">Accounts</h2>
             {accountData.map((info) => (
                 <AccountCard

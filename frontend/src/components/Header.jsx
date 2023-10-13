@@ -9,7 +9,8 @@ import { logoutUser } from "../thunks/userThunks";
 
 export default function Header() {
     // redux states
-    const { isLog } = useSelector((state) => state.user);
+    const isLog = useSelector((state) => state.user.userName);
+    const userName = useSelector((state) => state.user.userName);
 
     // recupération des hooks
     const dispatch = useDispatch();
@@ -22,11 +23,7 @@ export default function Header() {
     return (
         <header>
             <nav className="main-nav">
-                <Link
-                    className="main-nav-logo"
-                    to="./homepage"
-                    onClick={isLog ? handleLogout : null}
-                >
+                <Link className="main-nav-logo" to="./homepage">
                     <img
                         className="main-nav-logo-image"
                         src={argentBankLogo}
@@ -34,14 +31,31 @@ export default function Header() {
                     />
                     <h1 className="sr-only">Argent Bank</h1>
                 </Link>
-                <Link
-                    className="main-nav-item"
-                    to="./sign-in"
-                    onClick={isLog ? handleLogout : null}
-                >
-                    <i className="fa fa-user-circle"></i>
-                    {isLog ? " Sign Out" : " Sign In"}
-                </Link>
+                <div>
+                    {isLog ? (
+                        <Link className="main-nav-item" to="./User">
+                            <span className="main-nav-text">{userName}</span>
+                            <i className="fa fa-user-circle"></i>
+                        </Link>
+                    ) : null}
+                    {isLog ? (
+                        <Link className="main-nav-item" to="./User">
+                            <i className="fa-sharp fa-solid fa-gear"></i>
+                        </Link>
+                    ) : null}
+                    <Link
+                        className="main-nav-item"
+                        to="./sign-in"
+                        onClick={isLog ? handleLogout : null}
+                    >
+                        {isLog ? (
+                            <i className="fa-solid fa-power-off"></i>
+                        ) : (
+                            <i className="fa fa-user-circle"></i>
+                        )}
+                        {isLog ? null : " Sign In"}
+                    </Link>
+                </div>
             </nav>
         </header>
     );
