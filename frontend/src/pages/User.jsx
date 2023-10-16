@@ -57,7 +57,7 @@ export default function User() {
             <h2 className="sr-only">Accounts</h2>
             {accountData.map((info) => (
                 <AccountCard
-                    key={info.id}
+                    key={`accountCard-${info.id}`}
                     title={info.title}
                     amount={userBalances[info.amount]}
                     description={info.description}

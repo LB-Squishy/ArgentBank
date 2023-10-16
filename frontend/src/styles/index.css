@@ -347,7 +347,7 @@ body,
     margin-top: 1rem;
     border: none;
     background-color: #00bc77;
-    box-shadow: 1px 1px 1px #025839;
+    box-shadow: 1px 1px 3px #025839;
     color: #fff;
 }
 
@@ -359,6 +359,106 @@ body,
 .transaction-button:active {
     box-shadow: 1px 1px 1px #025839;
     cursor: pointer;
+}
+
+.transaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #222;
+    background-color: #fff;
+    width: 80%;
+    margin: 0 auto;
+    flex-direction: column;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+.transaction-collapse {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.transaction-collapse:hover {
+    box-shadow: 1px 1px 5px #0a251b;
+    cursor: pointer;
+}
+
+.transaction-collapse:active {
+    box-shadow: 1px 1px 1px #025839;
+    cursor: pointer;
+}
+
+.transaction-collapse-close {
+    border: none;
+    background-color: #00bc77;
+    box-shadow: 1px 1px 3px #025839;
+    color: #fff;
+}
+
+.transaction-collapse-open {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    border: none;
+    box-shadow: 1px 1px 3px #494949;
+}
+.transaction-collapse-open p {
+    margin: 0;
+}
+.transaction-extrainfo-title {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin: 20px 0 20px 20px;
+    gap: 10px;
+}
+
+.transaction-extrainfo-detail {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 20px 0 20px 20px;
+    gap: 10px;
+}
+
+.transaction-extrainfo-other {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.transaction-collapse .rotated i {
+    transform: rotate(-180deg);
+    transition: 0.2s ease-in-out;
+}
+
+.transaction-items {
+    display: flex;
+    width: 100%;
+}
+
+.transaction-items p:nth-child(1) {
+    flex: 20%;
+    margin-left: 0px;
+}
+
+.transaction-items p:nth-child(2) {
+    flex: 50%;
+    margin-left: 0px;
+}
+
+.transaction-items p:nth-child(3),
+.transaction-items p:nth-child(4) {
+    flex: 10%;
+    text-align: center;
+}
+
+.transaction-items p:nth-child(5) {
+    flex: 10%;
+    text-align: center;
 }
 
 .alert {
@@ -374,6 +474,26 @@ body,
 @media (min-width: 720px) {
     .account {
         flex-direction: row;
+    }
+
+    .transaction-items p:nth-child(1) {
+        flex: 20%;
+        margin-left: 20px;
+    }
+
+    .transaction-items p:nth-child(2) {
+        flex: 50%;
+        margin-left: 20px;
+    }
+
+    .transaction-items p:nth-child(3),
+    .transaction-items p:nth-child(4) {
+        flex: 10%;
+        text-align: center;
+    }
+
+    .transaction-items p:nth-child(5) {
+        flex: 10%;
     }
 
     .account-content-wrapper.cta {
