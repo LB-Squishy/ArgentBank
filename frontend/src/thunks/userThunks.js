@@ -58,3 +58,6 @@ export const changeProfilUser = createAsyncThunk(
         return response.data;
     }
 );
+
+// pour gestion de editName mode
+export const editNameToggle = createAsyncThunk("user/editNameToggle", () => {});

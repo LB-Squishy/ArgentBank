@@ -55,7 +55,7 @@ body,
 
 .main-nav-item {
     text-decoration: none;
-    margin-right: 1rem;
+    margin-right: 0.7rem;
 }
 
 .main-nav-text {
@@ -224,6 +224,46 @@ body,
     font-size: 1.2rem;
 }
 
+.edit-name-content {
+    box-sizing: border-box;
+    background-color: white;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 3rem;
+    padding: 2rem;
+}
+
+.edit-name-title {
+    display: flex;
+    justify-content: center;
+    margin-top: 0;
+    margin-bottom: 2rem;
+    color: #222;
+    font-weight: lighter;
+}
+
+.input-edit-name-wrapper {
+    display: flex;
+    text-align: left;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #222;
+}
+
+.input-edit-name-wrapper label {
+    width: 40%;
+}
+
+.input-edit-name-wrapper input {
+    width: 60%;
+    font-size: 1rem;
+}
+
+.input-button-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
 .footer {
     display: flex;
     justify-content: center;
@@ -240,7 +280,7 @@ body,
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid black;
+    border: 1px solid #222;
     background-color: #fff;
     width: 80%;
     margin: 0 auto;

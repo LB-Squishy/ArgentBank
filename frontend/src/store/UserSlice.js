@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser, logoutUser, addProfilUser } from "../thunks/userThunks";
+import {
+    loginUser,
+    logoutUser,
+    addProfilUser,
+    editNameToggle,
+} from "../thunks/userThunks";
 
 // création de la Slice
 const userSlice = createSlice({
@@ -9,8 +14,9 @@ const userSlice = createSlice({
         lastName: null,
         userName: null,
         token: null,
-        isLog: false,
         error: null,
+        isLog: false,
+        editNameMode: false,
     },
     extraReducers: (builder) => {
         builder
@@ -41,7 +47,13 @@ const userSlice = createSlice({
                 state.token = null;
                 state.isLog = false;
                 state.error = null;
+                state.editNameMode = false;
             })
+            // toggle le editNameMode
+            .addCase(editNameToggle.fulfilled, (state) => {
+                state.editNameMode = !state.editNameMode;
+            })
+            // récupère les infos d'un profil
             .addCase(addProfilUser.fulfilled, (state, action) => {
                 state.firstName = action.payload.body.firstName;
                 state.lastName = action.payload.body.lastName;
