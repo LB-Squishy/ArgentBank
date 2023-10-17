@@ -55,6 +55,7 @@ export default function EditNameForm({ token, userName }) {
                             id="userName"
                             value={newUserName}
                             onChange={(e) => setNewUserName(e.target.value)}
+                            autoComplete="off"
                             required
                         />
                     </div>

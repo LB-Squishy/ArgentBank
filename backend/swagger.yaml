@@ -1,158 +1,338 @@
-swagger: '2.0'
+swagger: "2.0"
 info:
-  title: Bank Argent API documentation
-  description: Contains all available API endpoints in this codebase
-  version: '1.0.0'
-  termsOfService: 'http://swagger.io/terms/'
+    title: Bank Argent API documentation
+    description: Contains all available API endpoints in this codebase
+    version: "1.0.0"
+    termsOfService: "http://swagger.io/terms/"
 host: localhost:3001
 basePath: /api/v1
 schemes:
-  - http
+    - http
 paths:
-  /user/login:
-    post:
-      tags:
-        - User Module
-      summary: Login
-      description: API for Login
-      parameters:
-        - in: body
-          name: body
-          description: Login Payload
-          required: true
-          schema:
-            $ref: '#/definitions/Login'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Login Successfully
-          schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/signup:
-    post:
-      tags:
-        - User Module
-      summary: Signup
-      description: API for Signup
-      parameters:
-        - in: body
-          name: body
-          description: Signup Payload
-          required: true
-          schema:
-            $ref: '#/definitions/User'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Signup Successfully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/profile:
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Profile API
-      description: API for fetching a user profile
-      #produces:
-       # - application/json
-      responses:
-        '200':
-          description: User profile retrieved successully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Profile API
-      description: API for updating a user profile
-      parameters:
-        - in: body
-          name: body
-          description: Update user profile attributes
-          required: true
-          schema:
-            $ref: '#/definitions/UserProfile'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User profile retrieved successully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
+    /user/login:
+        post:
+            tags:
+                - User Module
+            summary: Login
+            description: API for Login
+            parameters:
+                - in: body
+                  name: body
+                  description: Login Payload
+                  required: true
+                  schema:
+                      $ref: "#/definitions/Login"
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: Login Successfully
+                    schema:
+                        $ref: "#/definitions/LoginResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+    /user/signup:
+        post:
+            tags:
+                - User Module
+            summary: Signup
+            description: API for Signup
+            parameters:
+                - in: body
+                  name: body
+                  description: Signup Payload
+                  required: true
+                  schema:
+                      $ref: "#/definitions/User"
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: Signup Successfully
+                    schema:
+                        $ref: "#/definitions/ApiResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+    /user/profile:
+        post:
+            security:
+                - Bearer: []
+            tags:
+                - User Module
+            summary: User Profile API
+            description: API for fetching a user profile
+            #produces:
+            # - application/json
+            responses:
+                "200":
+                    description: User profile retrieved successully
+                    schema:
+                        $ref: "#/definitions/ApiResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+        put:
+            security:
+                - Bearer: []
+            tags:
+                - User Module
+            summary: User Profile API
+            description: API for updating a user profile
+            parameters:
+                - in: body
+                  name: body
+                  description: Update user profile attributes
+                  required: true
+                  schema:
+                      $ref: "#/definitions/UserProfile"
+            produces:
+                - application/json
+            responses:
+                "200":
+                    description: User profile retrieved successully
+                    schema:
+                        $ref: "#/definitions/ApiResponse"
+                "400":
+                    description: Invalid Fields
+                "500":
+                    description: Internal Server Error
+    # Récupérer les comptes de l'utilisateur
+    /account/{userMail}:
+        get:
+            security:
+                - Bearer: []
+            tags:
+                - Account Module
+            summary: Find account by Mail
+            description: API for fetching all account of the user
+            parameters:
+                - name: userMail
+                  in: path
+                  description: Mail of user to return
+                  required: true
+                  schema:
+                      type: string
+                      example: tony@stark.com
+            responses:
+                "200":
+                    description: User Account retrieved Successfully
+                    schema:
+                        $ref: "#/definitions/AccountResponse"
+                "400":
+                    description: Invalid Fields
+                "404":
+                    description: Account not found
+                "500":
+                    description: Internal Server Error
+    # Visualiser toutes les transactions pour le mois en cours, groupées par compte
+    # Visualiser les détails d'une transaction dans une autre vue
+    /transaction/{accountId}:
+        get:
+            security:
+                - Bearer: []
+            tags:
+                - Transaction Module
+            summary: Find transactions by accountId
+            description: API for fetching all transactions for the current month of an account
+            parameters:
+                - name: accountId
+                  in: path
+                  description: Id of an account to return
+                  required: true
+                  schema:
+                      type: string
+                      example: 1646446
+                - name: current date
+                  in: query
+                  description: Current Month Data to return
+                  required: true
+                  schema:
+                      type: string
+                      example: 2023-10-17T15:02:08.083Z
+            responses:
+                "200":
+                    description: User Transactions retrieved Successfully
+                    schema:
+                        $ref: "#/definitions/TransactionResponse"
+                "400":
+                    description: Invalid Fields
+                "404":
+                    description: Transaction not found
+                "405":
+                    description: Invalid input
+                "500":
+                    description: Internal Server Error
+    # Ajouter, modifier ou supprimer des informations sur une transaction
+    /transaction/{transactionId}:
+        put:
+            security:
+                - Bearer: []
+            tags:
+                - Transaction Module
+            summary: User Transaction update
+            description: API for update a transaction detail
+            parameters:
+                - name: transactionId
+                  in: path
+                  description: Id of a transaction to update
+                  required: true
+                  schema:
+                      type: string
+                      example: 473684
+                - name: category
+                  in: query
+                  description: Name of category to update
+                  schema:
+                      type: string
+                      example: New Name
+                - name: note
+                  in: query
+                  description: Name of note to update
+                  schema:
+                      type: string
+                      example: New lorem ipsum
+            responses:
+                "200":
+                    description: User Transactions retrieved Successfully
+                    schema:
+                        $ref: "#/definitions/TransactionDetailResponse"
+                "400":
+                    description: Invalid Fields
+                "404":
+                    description: Transaction not found
+                "405":
+                    description: Invalid input
+                "500":
+                    description: Internal Server Error
 securityDefinitions:
-  Bearer:
-    type: apiKey
-    name: Authorization
-    in: header
+    Bearer:
+        type: apiKey
+        name: Authorization
+        in: header
 definitions:
-  User:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-      firstName:
-        type: string
-        description: user first name
-      lastName:
-        type: string
-        description: user last name
-      userName:
-        type: string
-        description: user public name
-  Login:
-    properties:
-      email:
-        type: string
-        description: user email
-      password:
-        type: string
-        description: user password
-  ApiResponse:
-    type: object
-    properties:
-      status:
-        type: integer
-      message:
-        type: string
-      body:
+    User:
+        properties:
+            email:
+                type: string
+                description: user email
+            password:
+                type: string
+                description: user password
+            firstName:
+                type: string
+                description: user first name
+            lastName:
+                type: string
+                description: user last name
+            userName:
+                type: string
+                description: user public name
+    Login:
+        properties:
+            email:
+                type: string
+                description: user email
+            password:
+                type: string
+                description: user password
+    ApiResponse:
         type: object
         properties:
-          id:
-            type: string
-          email:
-            type: string
-  LoginResponse:
-    type: object
-    properties:
-      token:
-        type: string
-  UserProfile:
-    type: object
-    properties:
-      userName:
-        type: string
+            status:
+                type: integer
+            message:
+                type: string
+            body:
+                type: object
+                properties:
+                    id:
+                        type: string
+                    email:
+                        type: string
+    LoginResponse:
+        type: object
+        properties:
+            token:
+                type: string
+    UserProfile:
+        type: object
+        properties:
+            userName:
+                type: string
+    AccountResponse:
+        type: object
+        properties:
+            status:
+                type: integer
+            message:
+                type: string
+            body:
+                type: object
+                properties:
+                    id:
+                        type: string
+                        example: 466146464
+                    accountType:
+                        type: string
+                        example: Argent Bank Credit Card
+                    amount:
+                        type: string
+                        example: 2083.31
+                    balance statut:
+                        type: string
+                        example: Current Balance
+    TransactionResponse:
+        type: object
+        properties:
+            status:
+                type: integer
+            message:
+                type: string
+            body:
+                type: object
+                properties:
+                    transactionId:
+                        type: string
+                        example: 16153486
+                    date:
+                        type: string
+                        example: 2023-10-17T15:02:08.083Z
+                    description:
+                        type: string
+                        example: Golden Sun Bakery
+                    amount:
+                        type: string
+                        example: 8.22
+                    transactionType:
+                        type: string
+                        example: 466146464
+                    category:
+                        type: string
+                        example: Food
+                    note:
+                        type: string
+                        example: lorem ipsum
+    TransactionDetailResponse:
+        type: object
+        properties:
+            status:
+                type: integer
+            message:
+                type: string
+            body:
+                type: object
+                properties:
+                    transactionId:
+                        type: string
+                        example: 16153486
+                    category:
+                        type: string
+                        example: New Name
+                    note:
+                        type: string
+                        example: New lorem Ipsum
