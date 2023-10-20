@@ -4,6 +4,7 @@ import { addProfilUser, editNameToggle } from "../thunks/userThunks";
 import AccountCard from "../components/AccountCard";
 import accountData from "../data/accountCardData.json";
 import EditNameForm from "../components/EditNameForm";
+import { Navigate } from "react-router-dom";
 
 /**
  * Créer le contenu de la page User
@@ -14,6 +15,7 @@ export default function User() {
     const token = useSelector((state) => state.user.token);
     const userName = useSelector((state) => state.user.userName);
     const editNameMode = useSelector((state) => state.user.editNameMode);
+    const isLog = useSelector((state) => state.user.isLog);
 
     // Données de montant provisoires sans gestion de données par utilisateur
     const userBalances = {
@@ -27,8 +29,10 @@ export default function User() {
 
     // recupération des infos du profil qui s'est connecté
     useEffect(() => {
-        dispatch(addProfilUser(token));
-    }, [dispatch, token]);
+        if (isLog) {
+            dispatch(addProfilUser(token));
+        }
+    }, [dispatch, token, isLog]);
 
     // affichage du formulaire
     const handleClickEditName = () => {
@@ -37,32 +41,38 @@ export default function User() {
 
     return (
         <main className="main bg-dark">
-            {editNameMode ? (
-                <EditNameForm token={token} userName={userName} />
-            ) : (
-                <div className="header">
-                    <h1>
-                        Welcome back
-                        <br />
-                        {userName}
-                    </h1>
-                    <button
-                        className="edit-button"
-                        onClick={handleClickEditName}
-                    >
-                        Edit Name
-                    </button>
+            {isLog ? (
+                <div>
+                    {editNameMode ? (
+                        <EditNameForm token={token} userName={userName} />
+                    ) : (
+                        <div className="header">
+                            <h1>
+                                Welcome back
+                                <br />
+                                {userName}
+                            </h1>
+                            <button
+                                className="edit-button"
+                                onClick={handleClickEditName}
+                            >
+                                Edit Name
+                            </button>
+                        </div>
+                    )}
+                    <h2 className="sr-only">Accounts</h2>
+                    {accountData.map((info) => (
+                        <AccountCard
+                            key={`accountCard-${info.id}`}
+                            title={info.title}
+                            amount={userBalances[info.amount]}
+                            description={info.description}
+                        />
+                    ))}
                 </div>
+            ) : (
+                <Navigate to="/sign-in" />
             )}
-            <h2 className="sr-only">Accounts</h2>
-            {accountData.map((info) => (
-                <AccountCard
-                    key={`accountCard-${info.id}`}
-                    title={info.title}
-                    amount={userBalances[info.amount]}
-                    description={info.description}
-                />
-            ))}
         </main>
     );
 }
