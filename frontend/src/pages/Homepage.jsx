@@ -1,8 +1,8 @@
 import FeaturesBubble from "../components/FeaturesBubble";
 import featureData from "../data/featureBubbleData.json";
-import iconeChat from "../assets/icon-chat.png";
-import iconeMoney from "../assets/icon-money.png";
-import iconeSecurity from "../assets/icon-security.png";
+import iconeChat from "../assets/icon-chat.webp";
+import iconeMoney from "../assets/icon-money.webp";
+import iconeSecurity from "../assets/icon-security.webp";
 
 /**
  * Créer le contenu de la homepage
@@ -11,9 +11,9 @@ import iconeSecurity from "../assets/icon-security.png";
 export default function Homepage() {
     // recuperation des images
     const imageMap = {
-        "icon-chat.png": iconeChat,
-        "icon-money.png": iconeMoney,
-        "icon-security.png": iconeSecurity,
+        "icon-chat.webp": iconeChat,
+        "icon-money.webp": iconeMoney,
+        "icon-security.webp": iconeSecurity,
     };
     return (
         <main className="main">
